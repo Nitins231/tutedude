@@ -5,13 +5,16 @@ import os
 import pymongo
 
 
-app = Flask(__name__, template_folder="../frontend/templates")
-CORS(app)  # Enable CORS for frontend access
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+TEMPLATE_PATH = os.path.abspath(os.path.join(BASE_DIR, "../frontend/templates"))
+
+app = Flask(__name__, template_folder=TEMPLATE_PATH)
+CORS(app) # Enable CORS for all routes
 
 # MongoDB Atlas connection
 load_dotenv()
 MONGO_URI = os.getenv('MONGO_URI')
-client = pymongo.MongoClient(MONGO_URI)
+client = pymongo.MongoClient(MONGO_URI) 
 db = client.test
 collection = db['To-do-page']
     
