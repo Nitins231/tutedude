@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To-Do App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #c8fcfb;
+    }
+    .container {
+      background: rgb(163, 144, 247);
+      max-width: 500px;
+      margin: auto;
+      padding: 50px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(84, 73, 73, 0.1);
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      background-color: #ff0066;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>To-Do Page</h2>
+    <form id="todoForm">
+      <label for="itemName">Item Name</label>
+      <input type="text" id="itemName" name="itemName" required />
+
+      <label for="itemDescription">Item Description</label>
+      <textarea id="itemDescription" name="itemDescription" required></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+    <p id="responseMsg"></p>
+  </div>
+
+  <script>
+    const form = document.getElementById('todoForm');
+    const responseMsg = document.getElementById('responseMsg');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const itemName = document.getElementById('itemName').value;
+      const itemDescription = document.getElementById('itemDescription').value;
+
+      try {
+        const response = await fetch('http://localhost:5000/submittodoitem', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ itemName, itemDescription }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          responseMsg.textContent = "To-Do item submitted successfully!";
+          responseMsg.style.color = "green";
+          form.reset();
+        } else {
+          throw new Error(data.message || "Submission failed");
+        }
+      } catch (error) {
+        responseMsg.textContent = error.message;
+        responseMsg.style.color = "red";
+      }
+    });
+  </script>
+</body>
+</html>
