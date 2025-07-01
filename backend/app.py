@@ -5,10 +5,11 @@ import os
 import pymongo
 
 
+# Define path to the frontend/templates directory
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-TEMPLATE_PATH = os.path.abspath(os.path.join(BASE_DIR, "../frontend/templates"))
+TEMPLATE_DIR = os.path.join(BASE_DIR, "../frontend/templates")
 
-app = Flask(__name__, template_folder=TEMPLATE_PATH)
+app = Flask(__name__, template_folder=TEMPLATE_DIR)
 CORS(app) # Enable CORS for all routes
 
 # MongoDB Atlas connection
