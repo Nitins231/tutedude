@@ -15,7 +15,7 @@ CORS(app) # Enable CORS for all routes
 # MongoDB Atlas connection
 load_dotenv()
 MONGO_URI = os.getenv('MONGO_URI')
-client = pymongo.MongoClient(MONGO_URI) 
+client = pymongo.MongoClient(MONGO_URI, tls=True)
 db = client.test
 collection = db['To-do-page']
     
