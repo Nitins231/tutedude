@@ -71,6 +71,9 @@
       e.preventDefault();
 
       const itemName = document.getElementById('itemName').value;
+      const itemId = document.getElementById('itemId').value;
+      const itemUUID = document.getElementById('itemUUID').value;
+      const itemHash = document.getElementById('itemHash').value;
       const itemDescription = document.getElementById('itemDescription').value;
 
       try {
@@ -79,7 +82,7 @@
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ itemName, itemDescription }),
+          body: JSON.stringify({ itemName, itemId, itemUUID, itemHash, itemDescription }),
         });
 
         const data = await response.json();
